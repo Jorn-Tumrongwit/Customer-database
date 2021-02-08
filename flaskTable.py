@@ -4,7 +4,22 @@ import mysql.connector
 app = Flask(__name__)
 
 def showCustomerTable():
-    myTable = "<table style=\"width:100\">\n<tr>\n<th>id</th>\n<th>Name</th>\n<th>Address</th>\n</tr>\n"
+    myTable = '''
+<!DOCTYPE html>
+<html>
+<head>
+<scipt src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+<h1>Customers</h1>
+<table style="width:100">
+    <tr>
+        <th>id</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+'''
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -19,45 +34,23 @@ def showCustomerTable():
     mycursor.execute("SELECT * FROM CUSTOMERS ORDER BY id;")
     myresultShow = mycursor.fetchall()
     for row in myresultShow:
-        myTable = myTable + "<tr>\n<td>{}</td>\n<td>{}</td>\n<td>{}</td>\n</tr>".format(row[0],row[1],row[2])
+        myTable = myTable + '''
+    <tr>
+        <td>{}</td>
+        <td>{}</td>
+        <td>{}</td>
+    </tr>
+'''.format(row[0],row[1],row[2])
         print(row)
+        
+    myTable = myTable + '''
+</body>
+</html>
+'''
     
     return myTable
 
 print(showCustomerTable())
-    
-@app.route("/")
-def home():
-    
-    myhtml = '''
-<!DOCTYPE html>
-<html>
-<head>
-<scipt src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-function()
-{
-    $.ajax({
-        type:"get",
-        url:"/showCustomerTable",
-        datatype:"html",
-        success:function(data)
-        {
-            $( ".showCustomerTable" ).hmtl(data);
-        }
-    });
-};
-</script>
-</head>
-<body>
-<h1>Customers</h1>
-<div class="showCustomerTable">
-This will be replaced
-</div>
-</body>
-</html>
-'''
-    return myhtml
 
 if(__name__) == "__main__":
-    app.run()
+    app.run
