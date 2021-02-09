@@ -13,12 +13,13 @@ def showCustomerTable():
 
     </head>
     <body>
+    <center>
     <h1>Customers</h1>
-    <table style="width:100">
+    <table border="1">
         <tr>
-            <th>id</th>
+            <b><th>id</th>
             <th>Name</th>
-            <th>Address</th>
+            <th>Address</th></b>
         </tr>
     '''
     mydb = mysql.connector.connect(
@@ -45,6 +46,7 @@ def showCustomerTable():
         print(row)
         
     myTable = myTable + '''
+    </center>
     </body>
     </html>
     '''
